@@ -1,0 +1,129 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+.imgex {
+  width: 35%;
+  margin: 100px 0px 0px 0px;
+}
+
+h1 {
+    color: #ffffff;
+    font-family: 'Lobster', Arial, Helvetica, sans-serif;
+  }
+
+h2, h3, h4 {
+  color: #ffffff;
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  color: #ffffff;
+  /*
+  Source for linear gradient background CSS:
+  https://stackoverflow.com/questions/2869212/css3-gradient-background-set-on-body-doesnt-stretch-but-instead-repeats
+  */
+  background-image: linear-gradient(#008B8B, #00FFFF);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+footer {
+  color: black;
+  position: fixed;
+  bottom: 0px;
+}
+
+#frontPageIntro {
+  text-align: center;
+}
+
+#loginForm {
+  padding: 50px;
+  width: 50%;
+  justify-content: center;
+  color: black;
+}
+
+#postForm {
+  justify-content: center;
+  width: 50%;
+}
+
+#commentSection {
+  padding-top: 25px;
+}
+
+#loginErrorPlaceholder {
+  color: red;
+  padding: 5px;
+}
+
+#cardContainer {
+  width: 30%;
+  height: 60%;
+  margin: 100px auto;
+  justify-content: center;
+  color: black;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+
+.card-title {
+  padding-top: 10px;
+}
+
+.card-img-top {
+  width: 100%;
+  object-fit: cover;
+}
+
+#like-btn {
+  background-color: #f4511e;
+  transition: 0.3s;
+}
+
+#like-btn:hover {background-color: #d64518;}
+
+#postContainer {
+  width: 40%;
+  height: 60%;
+  margin: 100px auto;
+  justify-content: center;
+  color: black;
+}
+
+.divider{
+    width:7px;
+    height:auto;
+    display:inline-block;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones and tablets: */
+  [class*="col-"] {
+    width: 100%;
+  }
+
+  .imgex { width: 75%; }
+
+  #loginForm {
+    width: 100%;
+  }
+
+  #cardContainer {
+    width: 100%;
+  }
+
+  #postForm {
+    width: 100%;
+  }
+}
