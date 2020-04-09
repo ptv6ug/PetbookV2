@@ -8,7 +8,7 @@ function loginSetFocus() {
 
 function createPostSetFocus() {
   document.getElementById("inputTitle").focus();
-}  
+}
 
 function validateLogin() {
     var emailEntered = document.getElementById("inputEmail").value;
@@ -17,7 +17,7 @@ function validateLogin() {
             document.getElementById("loginErrorPlaceholder").textContent = "Username and/or password cannot be empty.";
     } else {
         /*alert("Page should redirect here.")*/
-        window.location.href = "dashboard.html";
+        // window.location.href = "dashboard.html";
     }
 }
 
@@ -30,10 +30,10 @@ function addComment1() {
   var newRow = tableRef.insertRow(tableRef.rows.length);
 
   // Prepare content for each cell (or <td>) of the row
-  var newCell = ""; 
+  var newCell = "";
   // Use insertCell(index) method to insert new cells (<td> elements) at the 1st position of the new <tr> element
   newCell = newRow.insertCell(0);            // specify which column (0)
-  newCell.innerHTML = commentEntered;        // assign content  
+  newCell.innerHTML = commentEntered;        // assign content
   newCell.onmouseover = this.rowIndex;       // attach row index to the row
   var commentCounter1 = (x) => x+=1;
   document.getElementById("commentsCount1").innerHTML= commentCounter1(commentsCount1);
