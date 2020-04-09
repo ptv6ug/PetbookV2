@@ -1,22 +1,30 @@
 <?php
-$hostname = 'localhost:3306';
-$dbname = 'petbook';
-$username = 'petbook';
-$pwd = 'pwdpetbook';
-
-$dsn = "mysql:host=$hostname;dbname=$dbname";
 
 try {
-   $db = new PDO($dsn, $username, $password);
-   echo "You are connected to the database $dbname";
+  $db = new PDO("mysql:host=localhost;dbname=petbook", "root", "");
+
+  $query = "SELECT email, password FROM test";
+  $statement = $db -> prepare($query);
+  $statement -> execute();
+  while ($data = $statement -> fetch()) {
+    echo $data['email'] . ": " . $data['password'] . "<br>";
+  }
+
+
+  /*
+  $statement -> execute();
+  $results = $statement -> fetchAll();
+  $statement -> closeCursor();
+
+  //echo $results;
+  foreach($results as $result) {
+    echo "ID: " . $result['id'] . " email: " . $result['email'] . " password: " . $result['password'] . "<br/>";
+  }
+  */
+
 }
 catch (PDOException $e) {
-   $error = $e->getMessage();
-   echo "An error occurred while connecting to the database: $error";
-}
-catch (Exception $e) {
-   $error = $e->getMessage();
-   echo "Error message: $error";
+  echo $e -> getMessage();
 }
 
-?>
+ ?>
