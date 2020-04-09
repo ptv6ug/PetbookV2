@@ -11,14 +11,14 @@ function createPostSetFocus() {
 }  
 
 function validateLogin() {
-    var emailEntered = document.getElementById("inputEmail").value;
+    var usernameEntered = document.getElementById("inputUsername").value;
     var passwordEntered = document.getElementById("inputPassword").value;
-    if ((emailEntered === "") | (passwordEntered === "")) {
+    if ((usernameEntered === "") | (passwordEntered === "")) {
             document.getElementById("loginErrorPlaceholder").textContent = "Username and/or password cannot be empty.";
-    } else {
-        /*alert("Page should redirect here.")*/
-        window.location.href = "dashboard.html";
-    }
+    // } else {
+    //     /*alert("Page should redirect here.")*/
+    //     window.location.href = "dashboard.html";
+    // }
 }
 
 var commentsCount1 = 0;
