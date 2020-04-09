@@ -1,6 +1,6 @@
 <?php
 
-// include("connect-db.php");
+require("connect-db.php");
 
 function login() {
 

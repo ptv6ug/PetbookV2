@@ -1,8 +1,8 @@
 <?php
 $hostname = 'localhost:3306';
 $dbname = 'petbook';
-$username = 'petbook';
-$pwd = 'pwdpetbook';
+$username = "petbook";
+$password = "pwdpetbook";
 
 $dsn = "mysql:host=$hostname;dbname=$dbname";
 
