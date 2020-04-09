@@ -45,7 +45,7 @@
         </div>
 
         <div class="container" id="loginForm">
-            <form name="loginForm">
+            <form name="loginForm" action="login.php" method="POST">
                 <div class="form-group">
                   <label for="inputEmailDesc">Email Address</label>
                   <input type="text" id="inputEmail" class="form-control" name="email" />
@@ -60,7 +60,7 @@
 
                 <div id="loginErrorPlaceholder"></div>
 
-                <input type="button" class="btn btn-light" value="Login" onclick="validateLogin()"/>
+                <input type="submit" class="btn btn-light" value="Login" onclick="validateLogin()"/>
             </form>
         </div>
 
