@@ -57,6 +57,7 @@ footer {
 }
 
 #postForm {
+  padding: 50px;
   justify-content: center;
   width: 50%;
 }
