@@ -54,6 +54,7 @@
         <!-- <?php // session_start(); ?> -->
 
         <?php
+        function login() {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $email = trim($_POST['email']);
                 $user = trim($_POST['username']);
@@ -102,8 +103,10 @@
                         }
                     }
                 }
+            }
         }
 
+        login();    
         ?>
 
         <footer>

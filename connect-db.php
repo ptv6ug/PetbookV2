@@ -8,7 +8,7 @@ $dsn = "mysql:host=$hostname;dbname=$dbname";
 
 try {
    $db = new PDO($dsn, $username, $password);
-   echo "You are connected to the database $dbname";
+   // echo "You are connected to the database $dbname";
 }
 catch (PDOException $e) {
    $error = $e->getMessage();

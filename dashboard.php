@@ -27,9 +27,9 @@
         <div class="container" id="cardContainer">
             <?php require("connect-db.php"); ?>
 
-            <h1>Email: <?php echo $_SESSION['email']; ?> </h1>
-            <h1>Username: <?php echo $_SESSION['user']; ?> </h1>
-            <h1>Password: <?php echo $_SESSION['pwd']; ?> </h1>
+            <p>Email: <?php echo $_SESSION['email']; ?> </p>
+            <p>Username: <?php echo $_SESSION['user']; ?> </p>
+            <p>Password: <?php echo $_SESSION['pwd']; ?> </p>
             
             <!-- card #1 -->
             <div class="card">
@@ -50,7 +50,7 @@
 
         <?php
         } else {
-            header('Location: login.php');
+            header('Location: index.php');
         }
         ?>
 
