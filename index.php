@@ -54,48 +54,56 @@
         <!-- <?php // session_start(); ?> -->
 
         <?php
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
-            if (isset($_POST['email'])) {
-                $email = trim($_POST['email']); // check that email was not empty string/just a space
-                if (!filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)) {
-                    // error message goes here
-                    echo '<script type="text/javascript">' . 
-                    'document.getElementById("loginErrorPlaceholder").innerHTML += "Please enter a valid email address";' .
-                    '</script>';
-                } else {
-                    $_SESSION['email'] = $email;
-                }
-            }
-
-            if (isset($_POST['username'])) {
-                $user = trim($_POST['username']); // check that username was not empty string/just a space
-                if (!ctype_alnum($user)) {
-                    // error message goes here
-                    echo '<script type="text/javascript">' . 
-                    'document.getElementById("loginErrorPlaceholder").innerHTML += "Username can only be made of numbers and letters.";' .
-                    '</script>';
-                } else {
-                    $_SESSION['user'] = $user;
-                }
-            }
-
-            if (isset($_POST['password'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $email = trim($_POST['email']);
+                $user = trim($_POST['username']);
                 $pwd = htmlspecialchars($_POST['password']);
-                $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
+                $hash_pwd = "";
 
-                if (password_verify($pwd, $hash_pwd)) {
-                    $_SESSION['pwd'] = $hash_pwd;
-                    header('Location: dashboard.php');
-                } else { 
-                    // error message goes here
-                    echo "<script> 
-                    document.getElementById('loginErrorPlaceholder').innerHTML += 'Incorrect password.'; 
-                    </script>";
+                if (isset($email) && isset($user) && isset($pwd)) {
+                    if (!filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)) {
+                        // if incorrect, show error
+                        echo '<script type="text/javascript">' . 
+                        'document.getElementById("loginErrorPlaceholder").innerHTML += "Please enter a valid email address";' .
+                        '</script>';
+                    }
+                    else if (!ctype_alnum($user)) {
+                        // if incorrect, show error
+                        echo '<script type="text/javascript">' . 
+                        'document.getElementById("loginErrorPlaceholder").innerHTML += "Username can only be made of numbers and letters.";' .
+                        '</script>';
+                    }
+                    else {
+                        try {
+                            $db = new PDO("mysql:host=localhost;dbname=petbook", "root", "");
+                  
+                            $query = "SELECT email, username, password FROM users";
+                            $statement = $db -> prepare($query);
+                            $statement -> execute();
+                            while ($data = $statement -> fetch()) {
+                                if ($data['email'] == $email && $data['username'] == $user && $data['password'] == $pwd) {
+                                    $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
+                                }
+                            }
+                        }
+                        catch (PDOException $e) {
+                            echo $e -> getMessage();
+                        }
+                        if (password_verify($pwd, $hash_pwd)) {
+                            $_SESSION['email'] = $email;
+                            $_SESSION['user'] = $user;
+                            $_SESSION['pwd'] = $hash_pwd;
+                            header("Location: dashboard.php");
+                        } else {
+                            // if incorrect, show error
+                            echo "<script> 
+                            document.getElementById('loginErrorPlaceholder').innerHTML += 'Incorrect password.'; 
+                            </script>";
+                        }
+                    }
                 }
-            }
         }
+
         ?>
 
         <footer>
