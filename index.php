@@ -25,12 +25,19 @@
 
         <div class="container" id="loginForm">
             <form name="loginForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+                
                 <div class="form-group">
-                  <label for="inputUsernameDesc">Username</label>
-                  <input type="text" id="inputUsername" class="form-control" name="username" autofocus required />
-                  <span class="error" id="inputUsernameError"></span>
+                    <label for="inputEmailDesc">Email Address</label>
+                    <input type="text" id="inputEmail" class="form-control" name="email" autofocus required />
+                    <span class="error" id="inputEmailError"></span>
                 </div>
 
+                <div class="form-group">
+                    <label for="inputUsernameDesc">Username</label>
+                    <input type="text" id="inputUsername" class="form-control" name="username" required />
+                    <span class="error" id="inputUsernameError"></span>
+                </div>
+                
                 <div class="form-group">
                     <label for="inputPasswordDesc">Password</label>
                     <input type="text" id="inputPassword" class="form-control" name="password" required />
@@ -44,30 +51,48 @@
             </form>
         </div>
 
-        <?php session_start(); ?>
+        <!-- <?php // session_start(); ?> -->
 
         <?php
-        function reject($entry) {
-            echo 'Incorrect ' . $entry;
-            exit();
-        }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && strlen($_POST['username']) > 0) {
-            $user = trim($_POST['username']); // checks that username was not empty string/just a space
-            if (!ctype_alnum($user)) { // if it is not made out of only numbers and letters, reject it, and throw an error
-                // error function goes here
-                reject('username');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            if (isset($_POST['email'])) {
+                $email = trim($_POST['email']); // check that email was not empty string/just a space
+                if (!filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL)) {
+                    // error message goes here
+                    echo '<script type="text/javascript">' . 
+                    'document.getElementById("loginErrorPlaceholder").innerHTML += "Please enter a valid email address";' .
+                    '</script>';
+                } else {
+                    $_SESSION['email'] = $email;
+                }
             }
-            if (isset($_POST['password'])) {
-                $pwd = trim($_POST['password']);
-                if (!ctype_alnum($pwd)) {
-                    // error function goes here
-                    reject('password');
+
+            if (isset($_POST['username'])) {
+                $user = trim($_POST['username']); // check that username was not empty string/just a space
+                if (!ctype_alnum($user)) {
+                    // error message goes here
+                    echo '<script type="text/javascript">' . 
+                    'document.getElementById("loginErrorPlaceholder").innerHTML += "Username can only be made of numbers and letters.";' .
+                    '</script>';
                 } else {
                     $_SESSION['user'] = $user;
-                    $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
+                }
+            }
+
+            if (isset($_POST['password'])) {
+                $pwd = htmlspecialchars($_POST['password']);
+                $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
+
+                if (password_verify($pwd, $hash_pwd)) {
                     $_SESSION['pwd'] = $hash_pwd;
                     header('Location: dashboard.php');
+                } else { 
+                    // error message goes here
+                    echo "<script> 
+                    document.getElementById('loginErrorPlaceholder').innerHTML += 'Incorrect password.'; 
+                    </script>";
                 }
             }
         }
