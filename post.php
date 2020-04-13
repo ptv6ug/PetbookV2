@@ -24,12 +24,11 @@
 
         <div class="container" id="postForm">
             <h1>Create a Post</h1><br>
-            <form name="postForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+            <form name="postForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
                 <!-- Hidden input of username --> 
                 <input type="hidden" id="inputUsername" name="username" value="<?php echo $_SESSION['user'] ?>" />
 
                 <!-- Select a photo button-->
-                <!-- <a href="#" class="btn btn-primary">Select a Photo</a><br><br> -->
                 <div class="form-group">
                     <label for="inputFile">Choose a Photo</label><br/>
                     <input type="file" id="inputFile" name="image" />

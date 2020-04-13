@@ -26,7 +26,7 @@
         ?>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="post.html" class="btn btn-danger" id="newPostDashboard">New Post</a>
+        <a href="post.php" class="btn btn-danger" id="newPostDashboard">New Post</a>
         <div class="divider"></div>
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

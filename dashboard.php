@@ -17,35 +17,58 @@
     </head>
 
     <body>
-        <?php include('header.php'); ?>
-
-        <?php
+        <?php 
+        include('header.php'); 
         session_start();
-        if (isset($_SESSION['user'])) {
         ?>
 
         <div class="container" id="cardContainer">
-            <?php require("connect-db.php"); ?>
-
-            <p>Email: <?php echo $_SESSION['email']; ?> </p>
+            <!-- For testing if you are in a session  -->
+            <!-- <p>Email: <?php echo $_SESSION['email']; ?> </p>
             <p>Username: <?php echo $_SESSION['user']; ?> </p>
-            <p>Password: <?php echo $_SESSION['pwd']; ?> </p>
+            <p>Password: <?php echo $_SESSION['pwd']; ?> </p> -->
             
-            <!-- card #1 -->
-            <div class="card">
-                <img src="images/jae-park-7GX5aICb5i4-unsplash.jpg" class="card-img-top" alt="meowing cat">
-                <div class="card-body">
-                  <button type="button" class="btn btn-secondary" id="like-btn" value="Like" onclick="increaseLike1()">
-                    <span class="fa fa-heart"></span>
-                  </button>
-                  <a id="likes1">0</a> likes
-                  <h5 class="card-title">she screm</h5>
-                  <p class="card-text">Cookie is screaming at me because I didn't feed her since 20 minutes ago.</p>
-                  <a href="detailCookieExample.html" class="btn btn-primary">Add a comment</a>
-                </div>
-                <div class="card-footer text-muted">Posted 2 minutes ago</div>
-            </div>
-            
+            <?php
+            if (isset($_SESSION['user'])) {
+                require('connect-db.php');
+                
+                // To prepare a SQL statement, use the prepare() method of the PDO object
+                //    syntax:   prepare(sql_statement)
+
+                // To execute a SQL statement, use the bindValue() method of the PDO statement object
+                // to bind the specified value to the specified param in the prepared statement 
+                //    syntax:   bindValue(param, value)
+                // then use the execute() method to execute the prepared statement
+
+                // Excute a SQL statement that doesn't have params
+                $query = "SELECT * FROM posts ORDER BY timestamp DESC";
+                $statement = $db->prepare($query); 
+                $statement->execute();
+
+                // fetchAll() returns an array for all of the rows in the result set
+                $results = $statement->fetchAll();
+
+                // closes the cursor and frees the connection to the server so other SQL statements may be issued 
+                $statement->closecursor();
+
+                foreach ($results as $result) {
+                        echo '
+                        <div class="card">
+                        <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
+                            <div class="card-body">
+                                <button type="button" class="btn btn-secondary" id="like-btn" value="Like" onclick="increaseLike1()">
+                                <span class="fa fa-heart"></span>
+                                </button>
+                                <a id="likes1">' . $result['likes'] . '</a> likes
+                                <h5 class="card-title">' . $result['title'] . '</h5>
+                                <p class="card-text">' . $result['caption'] . '</p>
+                                <a href="detailCookieExample.html" class="btn btn-primary">Add a comment</a>
+                            </div>
+                            <div class="card-footer text-muted">' . $result['timestamp'] . '</div>
+                        </div>
+                        ';
+                }
+            ?>
         </div>
 
         <?php
