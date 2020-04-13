@@ -51,6 +51,7 @@
                 $statement->closecursor();
 
                 foreach ($results as $result) {
+                    $timestamp = date('m/d/Y h:i A', strtotime($result['timestamp']));
                     echo '
                     <div class="card">
                     <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
@@ -63,7 +64,7 @@
                             . $result['likes'] . ' <span class="fa fa-heart"></span>
                             </button>
                         </div>
-                        <div class="card-footer text-muted">' . $result['timestamp']; 
+                        <div class="card-footer text-muted">' . $timestamp; 
                         if ($_SESSION['user'] === $result['username']) {
                             // echo '<a href="update-post.php?id=' . $result['uniqueID'] . '" class="btn btn-secondary btn-sm float-right">Edit post</a>';
                             echo '

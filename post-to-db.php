@@ -14,8 +14,8 @@
         $caption = trim($_POST['caption']);
         // code to get current date and time is from:
         // https://stackoverflow.com/questions/4456395/php-get-us-eastern-current-time
-        date_default_timezone_set('US/Eastern');
-        $datetime = date('m/d/Y h:i a', time());
+        date_default_timezone_set('America/New_York');
+        $datetime = date('Y-m-d H:i:s', time());
         $likes = 0;
 
         if (isset($unique_id) && isset($user) && isset($image) && isset($title) && isset($caption) && isset($datetime) && isset($likes)) {
