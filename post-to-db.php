@@ -16,7 +16,6 @@
         // https://stackoverflow.com/questions/4456395/php-get-us-eastern-current-time
         date_default_timezone_set('US/Eastern');
         $datetime = date('m/d/Y h:i a', time());
-        echo 'Datetime: ' . $datetime . '<br/>';
         $likes = 0;
 
         if (isset($unique_id) && isset($user) && isset($image) && isset($title) && isset($caption) && isset($datetime) && isset($likes)) {

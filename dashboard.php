@@ -19,7 +19,6 @@
     <body>
         <?php 
         include('header.php'); 
-        session_start();
         ?>
 
         <div class="container" id="cardContainer">
@@ -52,24 +51,43 @@
                 $statement->closecursor();
 
                 foreach ($results as $result) {
-                        echo '
-                        <div class="card">
-                        <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
-                            <div class="card-body">
-                                <button type="button" class="btn btn-secondary" id="like-btn" value="Like" onclick="increaseLike1()">
-                                <span class="fa fa-heart"></span>
-                                </button>
-                                <a id="likes1">' . $result['likes'] . '</a> likes
-                                <h5 class="card-title">' . $result['title'] . '</h5>
-                                <p class="card-text">' . $result['caption'] . '</p>
-                                <a href="detailCookieExample.html" class="btn btn-primary">Add a comment</a>
-                            </div>
-                            <div class="card-footer text-muted">' . $result['timestamp'] . '</div>
+                    echo '
+                    <div class="card">
+                    <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">' . $result['title'] . '</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted by ' . $result['username'] . '</h6>
+                            <p class="card-text">' . $result['caption'] . '</p>
+                            <a href="detailCookieExample.html" class="btn btn-primary btn-sm float-left">Add a comment</a>
+                            <button type="submit" class="btn btn-secondary btn-sm float-right" id="like-btn" value="Like">' 
+                            . $result['likes'] . ' <span class="fa fa-heart"></span>
+                            </button>
                         </div>
-                        ';
+                        <div class="card-footer text-muted">' . $result['timestamp']; 
+                        if ($_SESSION['user'] === $result['username']) {
+                            // echo '<a href="update-post.php?id=' . $result['uniqueID'] . '" class="btn btn-secondary btn-sm float-right">Edit post</a>';
+                            echo '
+                            <form action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">
+                                <input type="hidden" id="inputUniqueID" name="uniqueID" value="' . $result['uniqueID'] . '" />
+                                <input type="submit" class="btn btn-secondary btn-sm float-right" formaction="update-post.php" value="Edit post" />
+                            </form>';
+                        }
+                        echo 
+                        '</div>
+                    </div>
+                    ';
                 }
             ?>
         </div>
+
+        <!-- <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+            <input type="hidden" id="inputUniqueID" name="uniqueID" value="<?php echo $result['uniqueID'] ?>" />
+            <input type="hidden" id="inputUsername" name="username" value="<?php echo $result['username'] ?>" />
+            <input type="hidden" id="inputImage" name="image" value="<?php echo $result['image'] ?>" />
+            <input type="hidden" id="inputTitle" name="title" value="<?php echo $result['title'] ?>" />
+            <input type="hidden" id="inputCaption" name="caption" value="<?php echo $result['caption'] ?>" />
+            <input type="submit" class="btn btn-secondary btn-sm float-right" formaction="update-post.php" value="Edit post" />
+        </form> -->
 
         <?php
         } else {
