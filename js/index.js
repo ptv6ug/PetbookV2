@@ -11,14 +11,15 @@ function createPostSetFocus() {
 }  
 
 function validateLogin() {
-    var emailEntered = document.getElementById("inputEmail").value;
+    var usernameEntered = document.getElementById("inputUsername").value;
     var passwordEntered = document.getElementById("inputPassword").value;
-    if ((emailEntered === "") | (passwordEntered === "")) {
-            document.getElementById("loginErrorPlaceholder").textContent = "Username and/or password cannot be empty.";
-    } else {
-        /*alert("Page should redirect here.")*/
-        window.location.href = "dashboard.html";
+    if ((usernameEntered === "") | (passwordEntered === "")) {
+      document.getElementById("loginErrorPlaceholder").textContent = "Username and/or password cannot be empty.";
     }
+    // } else {
+    //     /*alert("Page should redirect here.")*/
+    //     window.location.href = "dashboard.html";
+    // }
 }
 
 var commentsCount1 = 0;
@@ -41,20 +42,8 @@ function addComment1() {
   document.getElementById("inputComment").value = "";
 }
 
-var likes1 = 0;
-function increaseLike1() {
-  likes1 += 1;
-  document.getElementById("likes1").innerHTML= likes1;
-}
-
-var likes2 = 0;
-function increaseLike2() {
-  likes2 += 1;
-  document.getElementById("likes2").innerHTML= likes2;
-}
-
-var likes3 = 0;
-function increaseLike3() {
-  likes3 += 1;
-  document.getElementById("likes3").innerHTML= likes3;
-}
+// var likes1 = 0;
+// function increaseLike() {
+//   likes1 += 1;
+//   document.getElementById("likes1").innerHTML= likes1;
+// }

@@ -44,6 +44,11 @@ footer {
   text-align: center;
 }
 
+#logoutOutro {
+  text-align: center;
+  justify-content: center;
+}
+
 #loginForm {
   padding: 50px;
   width: 50%;
@@ -52,6 +57,7 @@ footer {
 }
 
 #postForm {
+  padding: 50px;
   justify-content: center;
   width: 50%;
 }

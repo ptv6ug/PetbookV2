@@ -1,5 +1,5 @@
 <?php
-$hostname = 'localhost';
+$hostname = 'localhost:3306';
 $dbname = 'petbook';
 $username = "petbook";
 $password = "pwdpetbook";
@@ -7,7 +7,7 @@ $password = "pwdpetbook";
 $dsn = "mysql:host=$hostname;dbname=$dbname";
 
 try {
-  $db = new PDO("mysql:host=localhost;dbname=petbook", "root", "");
+   $db = new PDO($dsn, $username, $password);
    // echo "You are connected to the database $dbname" . "<br/>";
 }
 catch (PDOException $e) {
