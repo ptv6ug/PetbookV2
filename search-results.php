@@ -41,7 +41,7 @@
                 // then use the execute() method to execute the prepared statement
 
                 // Excute a SQL statement that doesn't have params
-                $date = date('hi');
+                $date = date('his');
                 $query = "SELECT * FROM search_results" . $_SESSION['user'] . $date .  " ORDER BY timestamp DESC;";
                 $statement = $db->prepare($query);
                 $statement->execute();

@@ -42,7 +42,7 @@
             $keyword = trim($_GET['keyword']);
             try {
                 $db = new PDO("mysql:host=localhost;dbname=petbook", "root", "");
-                $date = date('hi');
+                $date = date('his');
 
                 $query = "CREATE TABLE search_results" . $_SESSION['user'] . $date . " SELECT uniqueID, username, image, title, caption, timestamp, likes FROM posts
                 WHERE uniqueID LIKE '%$keyword%' OR username LIKE '%$keyword%' OR image LIKE '%$keyword%' OR title LIKE '%$keyword%'
@@ -59,7 +59,7 @@
           }
         }
     }
-    
+
     error_reporting(0);
     search();
 
