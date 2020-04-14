@@ -31,19 +31,19 @@
                 <!-- Select a photo button-->
                 <div class="form-group">
                     <label for="inputFile">Choose a Photo</label><br/>
-                    <input type="file" id="inputFile" name="image" />
+                    <input type="file" id="inputFile" name="image" required />
                 </div>
 
                 <!-- Title text area-->
                 <div class="form-group">
                   <label for="inputTitle">Provide a Title</label><br>
-                  <textarea rows="1" id="inputTitle" name="title" style="width: 100%" placeholder="Title here"></textarea>
+                  <textarea rows="1" id="inputTitle" name="title" style="width: 100%" placeholder="Title here" required></textarea>
                 </div>
 
                 <!-- Caption text area-->
                 <div class="form-group">
                   <label for="inputCaption">Provide a Caption</label><br>
-                  <textarea id="inputCaption" name="caption" rows="8" style="width: 100%" placeholder="Caption here"></textarea>
+                  <textarea id="inputCaption" name="caption" rows="8" style="width: 100%" placeholder="Caption here" required></textarea>
                 </div>
 
                 <!--Post button-->
