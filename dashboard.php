@@ -51,36 +51,25 @@
                 $statement->closecursor();
 
                 foreach ($results as $result) {
-                    $timestamp = date('m/d/Y h:i A', strtotime($result['timestamp']));
-                    echo '
-                    <div class="card">
-                    <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">' . $result['title'] . '</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Posted by ' . $result['username'] . '</h6>
-                            <p class="card-text">' . $result['caption'] . '</p>
-                            <a href="detailCookieExample.html" class="btn btn-primary btn-sm float-left">Add a comment</a>
-                            <button type="submit" class="btn btn-secondary btn-sm float-right" id="like-btn" value="Like">' 
-                            . $result['likes'] . ' <span class="fa fa-heart"></span>
-                            </button>
+                        echo '
+                        <div class="card">
+                        <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
+                            <div class="card-body">
+                                <button type="button" class="btn btn-secondary" id="like-btn" value="Like" onclick="increaseLike1()">
+                                <span class="fa fa-heart"></span>
+                                </button>
+                                <a id="likes1">' . $result['likes'] . '</a> likes
+                                <h5 class="card-title">' . $result['title'] . '</h5>
+                                <p class="card-text">' . $result['caption'] . '</p>
+                                <a href="detailCookieExample.html" class="btn btn-primary">Add a comment</a>
+                            </div>
+                            <div class="card-footer text-muted">' . $result['timestamp'] . '</div>
                         </div>
-                        <div class="card-footer text-muted">' . $timestamp; 
-                        if ($_SESSION['user'] === $result['username']) {
-                            // echo '<a href="update-post.php?id=' . $result['uniqueID'] . '" class="btn btn-secondary btn-sm float-right">Edit post</a>';
-                            echo '
-                            <form action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">
-                                <input type="hidden" id="inputUniqueID" name="uniqueID" value="' . $result['uniqueID'] . '" />
-                                <input type="submit" class="btn btn-secondary btn-sm float-right" formaction="update-post.php" value="Edit post" />
-                            </form>';
-                        }
-                        echo 
-                        '</div>
-                    </div>
-                    ';
+                        ';
                 }
             ?>
         </div>
-      
+
         <?php
         } else {
             header('Location: index.php');

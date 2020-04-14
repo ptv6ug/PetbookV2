@@ -6,8 +6,7 @@
         $user = trim($_POST['username']);
         // code to upload image is from:
         // https://www.w3schools.com/php/php_file_upload.asp
-        // $dir = "/Users/RyanRiley/Applications/xampp/htdocs/PetbookV2/uploaded_images/"; // full path of target directory
-        $dir = "C:/xampp/htdocs/PetbookV2/uploaded_images/"; // full path of target directory
+        $dir = "/Users/RyanRiley/Applications/xampp/htdocs/PetbookV2/uploaded_images/"; // full path of target directory
         $image_to_save = $dir . basename($_FILES["image"]["tmp_name"]);
         move_uploaded_file($_FILES["image"]["tmp_name"], $image_to_save);
         $image = basename($_FILES["image"]["tmp_name"]);
@@ -15,8 +14,9 @@
         $caption = trim($_POST['caption']);
         // code to get current date and time is from:
         // https://stackoverflow.com/questions/4456395/php-get-us-eastern-current-time
-        date_default_timezone_set('America/New_York');
-        $datetime = date('Y-m-d H:i:s', time());
+        date_default_timezone_set('US/Eastern');
+        $datetime = date('m/d/Y h:i a', time());
+        echo 'Datetime: ' . $datetime . '<br/>';
         $likes = 0;
 
         if (isset($unique_id) && isset($user) && isset($image) && isset($title) && isset($caption) && isset($datetime) && isset($likes)) {
@@ -37,4 +37,3 @@
 header("Location: dashboard.php");
 
 ?>
-
