@@ -10,58 +10,53 @@
         <link rel="stylesheet" href="styles/main.css">
         <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-        <title>Share a Photo</title>
+        <title>Create a Post</title>
         <script type="text/javascript" src="js/index.js"></script>
     </head>
-    <body onload="createPostSetFocus()">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                      <a class="nav-link" href="index.html">Home </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.html">Dashboard </a>
-                    </li>
-                  </ul>
-                  <form class="form-inline my-2 my-lg-0">
-                    <a href="post.html" class="btn btn-danger" id="newPostDashboard">New Post</a>
-                    <div class="divider"></div>
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                  </form>
-                </div>
-              </nav>
-        </header>
+
+    <body>
+        <?php include('header.php'); ?>
+
+        <?php
+        session_start();
+        if (isset($_SESSION['user'])) {
+        ?>
 
         <div class="container" id="postForm">
-            <h1>Share a photo</h1><br>
-              <form name="postForm">
+            <h1>Create a Post</h1><br>
+            <form name="postForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+                <!-- Hidden input of username --> 
+                <input type="hidden" id="inputUsername" name="username" value="<?php echo $_SESSION['user'] ?>" />
 
                 <!-- Select a photo button-->
-                <a href="#" class="btn btn-primary">Select a Photo</a><br><br>
+                <div class="form-group">
+                    <label for="inputFile">Choose a Photo</label><br/>
+                    <input type="file" id="inputFile" name="image" required />
+                </div>
 
                 <!-- Title text area-->
                 <div class="form-group">
                   <label for="inputTitle">Provide a Title</label><br>
-                  <textarea name="inputTitle" rows="1" id="inputTitle" style="width: 100%" placeholder="Title here"></textarea>
+                  <textarea rows="1" id="inputTitle" name="title" style="width: 100%" placeholder="Title here" required></textarea>
                 </div>
 
                 <!-- Caption text area-->
                 <div class="form-group">
                   <label for="inputCaption">Provide a Caption</label><br>
-                  <textarea name="inputCaption" rows="8"  id="inputCaption" style="width: 100%" placeholder="Caption here"></textarea>
+                  <textarea id="inputCaption" name="caption" rows="8" style="width: 100%" placeholder="Caption here" required></textarea>
                 </div>
 
                 <!--Post button-->
-                <a href="dashboard.html" class="btn btn-success">Post!</a>
-              
-              </form>
+                <!-- <a href="dashboard.php" formaction="post-to-db.php" class="btn btn-success">Post!</a> -->
+                <input type="submit" class="btn btn-light" formaction="post-to-db.php" value="Post" />
+            </form>
         </div>
+
+        <?php
+        } else {
+            header('Location: index.php');
+        }
+        ?>
 
         <footer>
             <small>© Pauline Vu & Ryan Riley</small>
