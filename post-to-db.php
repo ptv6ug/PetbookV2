@@ -4,8 +4,9 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $unique_id = uniqid();
         $user = trim($_POST['username']);
-        // code to upload image is from: 
+        // code to upload image is from:
         // https://www.w3schools.com/php/php_file_upload.asp
+        // $dir = "/Users/RyanRiley/Applications/xampp/htdocs/PetbookV2/uploaded_images/"; // full path of target directory
         $dir = "C:/xampp/htdocs/PetbookV2/uploaded_images/"; // full path of target directory
         $image_to_save = $dir . basename($_FILES["image"]["tmp_name"]);
         move_uploaded_file($_FILES["image"]["tmp_name"], $image_to_save);
@@ -36,3 +37,4 @@
 header("Location: dashboard.php");
 
 ?>
+
