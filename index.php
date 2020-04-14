@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Ryan Riley -->
         <meta charset="UTF-8"> <html lang="en">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +41,7 @@
                 
                 <div class="form-group">
                     <label for="inputPasswordDesc">Password</label>
-                    <input type="text" id="inputPassword" class="form-control" name="password" required />
+                    <input type="password" id="inputPassword" class="form-control" name="password" required />
                     <span class="error" id="inputPasswordError"></span>
                 </div>
 
