@@ -12,14 +12,13 @@
         <link rel="stylesheet" href="styles/main.css">
         <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-        <title>Timeline</title>
+        <title>Search Results</title>
         <script type="text/javascript" src="js/index.js"></script>
     </head>
 
     <body>
         <?php
         include('header.php');
-        session_start();
         ?>
 
         <div class="container" id="cardContainer">
@@ -41,8 +40,7 @@
                 // then use the execute() method to execute the prepared statement
 
                 // Excute a SQL statement that doesn't have params
-                $date = date('his');
-                $query = "SELECT * FROM search_results" . $_SESSION['user'] . $date .  " ORDER BY timestamp DESC;";
+                $query = "SELECT * FROM search_results ORDER BY timestamp DESC";
                 $statement = $db->prepare($query);
                 $statement->execute();
 
@@ -79,11 +77,10 @@
         ?>
 
         <?php
-        $date = date('hi');
-        $query = "DROP TABLE search_results" . $_SESSION['user'] . $date .  ";";
-        $statement = $db->prepare($query);
-        $statement->execute();
-        $statement->closecursor();
+            $query = "DROP TABLE search_results";
+            $statement = $db->prepare($query);
+            $statement->execute();
+            $statement->closecursor();
         ?>
 
         <footer>

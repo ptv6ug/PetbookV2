@@ -19,7 +19,6 @@
     <body>
         <?php 
         include('header.php'); 
-        session_start();
         ?>
 
         <div class="container" id="cardContainer">
