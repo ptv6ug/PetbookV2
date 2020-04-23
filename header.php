@@ -14,6 +14,9 @@
         <li class="nav-item">
             <a class="nav-link" href="dashboard.php">Dashboard</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="http://localhost:4200">Contact Us</a>
+        </li>
         <?php
         if (isset($_SESSION['user'])) {
           echo '<li class="nav-item">
