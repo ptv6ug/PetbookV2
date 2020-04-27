@@ -31,42 +31,86 @@
             <?php
             if (isset($_SESSION['user'])) {
                 require('connect-db.php');
-                
+
                 // To prepare a SQL statement, use the prepare() method of the PDO object
                 //    syntax:   prepare(sql_statement)
 
                 // To execute a SQL statement, use the bindValue() method of the PDO statement object
-                // to bind the specified value to the specified param in the prepared statement 
+                // to bind the specified value to the specified param in the prepared statement
                 //    syntax:   bindValue(param, value)
                 // then use the execute() method to execute the prepared statement
 
                 // Excute a SQL statement that doesn't have params
                 $query = "SELECT * FROM posts ORDER BY timestamp DESC";
-                $statement = $db->prepare($query); 
+                $statement = $db->prepare($query);
                 $statement->execute();
 
                 // fetchAll() returns an array for all of the rows in the result set
                 $results = $statement->fetchAll();
 
-                // closes the cursor and frees the connection to the server so other SQL statements may be issued 
+                // closes the cursor and frees the connection to the server so other SQL statements may be issued
                 $statement->closecursor();
 
                 foreach ($results as $result) {
-                        echo '
-                        <div class="card">
-                        <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
-                            <div class="card-body">
-                                <button type="button" class="btn btn-secondary" id="like-btn" value="Like" onclick="increaseLike1()">
-                                <span class="fa fa-heart"></span>
-                                </button>
-                                <a id="likes1">' . $result['likes'] . '</a> likes
-                                <h5 class="card-title">' . $result['title'] . '</h5>
-                                <p class="card-text">' . $result['caption'] . '</p>
-                                <a href="detailCookieExample.html" class="btn btn-primary">Add a comment</a>
-                            </div>
-                            <div class="card-footer text-muted">' . $result['timestamp'] . '</div>
+                    $timestamp = date('m/d/Y h:i A', strtotime($result['timestamp']));
+                    $id = $result['uniqueID'];
+                    echo '
+                    <div class="card">
+                    <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">' . $result['title'] . '</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted by ' . $result['username'] . '</h6>
+                            <p class="card-text">' . $result['caption'] . '</p>';
+
+                            if (isset($result['comments'])) {
+                              $comments = explode("///", $result['comments']);
+                              $len = count($comments);
+                              for ($i = 0; $i < $len - 1; $i++) {
+                                $info = explode(': ', $comments[$i]);
+                                $name = $info[0];
+                                $comment = $info[1];
+                                echo '<p class="card-text"> <mark style="color:#66b3ff">' . $name . '</mark>' . $comment . '</p>';
+                              }
+                            }
+
+                            ?>
+
+                            <form name="commentForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                  <textarea id="inputCaption" name="comment" rows="2" style="width: 100%" placeholder="Add a comment" required></textarea>
+                                  <input type="submit" class="btn btn-primary btn-sm float-left" value="Add Comment" />
+                                </div>
+                            </form>
+
+                            <?php
+
+                            if (isset($_POST['comment'])) {
+                              $comment = $result['comments'] . $_SESSION['user'] . ": " . $_POST['comment'] . "///";
+                              $query = "UPDATE `posts` SET `comments` = '" . $comment . "' WHERE `posts`.`uniqueID` = '$id';";
+                              $statement = $db->prepare($query);
+                              $statement->execute();
+                              unset($_POST['comment']);
+                              header('Location: dashboard.php');
+                            }
+
+                            echo '
+                            <button type="submit" class="btn btn-secondary btn-sm float-right" id="like-btn" value="Like">'
+                            . $result['likes'] . ' <span class="fa fa-heart"></span>
+                            </button>
                         </div>
-                        ';
+                        <div class="card-footer text-muted">' . $timestamp;
+                        if ($_SESSION['user'] === $result['username']) {
+                            echo '
+                            <form action="' . $_SERVER['PHP_SELF'] . '" method="post" enctype="multipart/form-data">
+                                <input type="hidden" id="inputUniqueID" name="uniqueID" value="' . $result['uniqueID'] . '" />
+                                <input type="submit" class="btn btn-secondary btn-sm float-right" formaction="update-post.php" value="Edit post" />
+                            </form>';
+                        }
+                        echo
+                        '</div>
+                    </div>
+                    ';
                 }
             ?>
         </div>
