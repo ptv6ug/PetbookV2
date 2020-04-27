@@ -53,19 +53,53 @@
 
                 foreach ($results as $result) {
                     $timestamp = date('m/d/Y h:i A', strtotime($result['timestamp']));
+                    $id = $result['uniqueID'];
                     echo '
                     <div class="card">
                     <img src ="uploaded_images/' . $result['image'] . '" class="card-img-top" />
                         <div class="card-body">
                             <h5 class="card-title">' . $result['title'] . '</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Posted by ' . $result['username'] . '</h6>
-                            <p class="card-text">' . $result['caption'] . '</p>
-                            <a href="detailCookieExample.html" class="btn btn-primary btn-sm float-left">Add a comment</a>
-                            <button type="submit" class="btn btn-secondary btn-sm float-right" id="like-btn" value="Like">' 
+                            <p class="card-text">' . $result['caption'] . '</p>';
+                            
+                            if (isset($result['comments'])) {
+                                $comments = explode("///", $result['comments']);
+                                $len = count($comments);
+                                for ($i = 0; $i < $len - 1; $i++) {
+                                  $info = explode(': ', $comments[$i]);
+                                  $name = $info[0];
+                                  $comment = $info[1];
+                                  echo '<p class="card-text"> <mark style="color:#66b3ff">' . $name . '</mark>' . $comment . '</p>';
+                                }
+                            }
+
+                            ?>
+
+                            <form name="commentForm" action="<?php $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <textarea id="inputCaption" name="comment" rows="2" style="width: 100%" placeholder="Add a comment" required></textarea>
+                                    <input type="submit" class="btn btn-primary btn-sm float-left" value="Add Comment" />
+                                </div>
+                            </form>
+
+                            <?php
+
+                            if (isset($_POST['comment'])) {
+                                $comment = $result['comments'] . $_SESSION['user'] . ": " . $_POST['comment'] . "///";
+                                $query = "UPDATE `posts` SET `comments` = '" . $comment . "' WHERE `posts`.`uniqueID` = '$id';";
+                                $statement = $db->prepare($query);
+                                $statement->execute();
+                                unset($_POST['comment']);
+                                header('Location: dashboard.php');
+                            }
+
+                            echo '
+                            <button type="submit" class="btn btn-secondary btn-sm float-right" id="like-btn" value="Like">'
                             . $result['likes'] . ' <span class="fa fa-heart"></span>
                             </button>
                         </div>
                         <div class="card-footer text-muted">' . $timestamp; 
+                        
                         if ($_SESSION['user'] === $result['username']) {
                             // echo '<a href="update-post.php?id=' . $result['uniqueID'] . '" class="btn btn-secondary btn-sm float-right">Edit post</a>';
                             echo '
@@ -74,7 +108,7 @@
                                 <input type="submit" class="btn btn-secondary btn-sm float-right" formaction="update-post.php" value="Edit post" />
                             </form>';
                         }
-                        echo 
+                        echo
                         '</div>
                     </div>
                     ';
