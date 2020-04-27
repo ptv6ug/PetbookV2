@@ -7,7 +7,7 @@
     try {
         // $db = new PDO("mysql:host=localhost;dbname=petbook", "root", "");
         
-        $query = "CREATE TABLE search_results SELECT uniqueID, username, image, title, caption, timestamp, likes FROM posts
+        $query = "CREATE TABLE search_results SELECT uniqueID, username, image, title, caption, timestamp, likes, comments FROM posts
         WHERE uniqueID LIKE '%$keyword%' OR username LIKE '%$keyword%' OR image LIKE '%$keyword%' OR title LIKE '%$keyword%'
         OR caption LIKE '%$keyword%' OR timestamp LIKE '%$keyword%' OR likes LIKE '%$keyword%'";
         $statement = $db->prepare($query);
